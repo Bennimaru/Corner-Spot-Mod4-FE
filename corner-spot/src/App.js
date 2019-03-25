@@ -19,10 +19,17 @@ class App extends React.Component{
     }))
   }
 
-  handleClick= item =>{
+  handleAdd= item =>{
     let newOrder=[item,...this.state.order]
     this.setState({
       order: newOrder
+    })
+  }
+
+  handleRemove= item =>{
+    let newOrder = this.state.order.filter(items=>items.id!==item.id)
+    this.setState({
+      order:newOrder
     })
   }
 
@@ -30,8 +37,8 @@ class App extends React.Component{
     return(
       <div className="App">
         <NavBar />
-        <Menu menu={this.state.menu} handleClick={this.handleClick}/>
-        <Order order={this.state.order}/>
+        <Menu menu={this.state.menu} handleClick={this.handleAdd}/>
+        <Order order={this.state.order} handleClick={this.handleRemove}/>
       </div>
     )
   }

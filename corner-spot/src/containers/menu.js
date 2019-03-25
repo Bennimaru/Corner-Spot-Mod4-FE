@@ -4,7 +4,7 @@ import ItemCard from '../components/itemcard'
 class Menu extends React.Component{
 
   renderMenu= item=>{
-    return <ItemCard key={item.id} item={item} handleClick={this.props.handleClick}/>
+    return <ItemCard key={item.id} item={item} handleClick={this.props.handleClick} button='+'/>
   }
 
   render(){
