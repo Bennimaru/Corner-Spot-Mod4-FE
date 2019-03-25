@@ -6,6 +6,10 @@ class NavBar extends React.Component{
     return(
       <div id="NavBar">
         Navigation here
+        <button>Cocktails</button>
+        <button>Small Plates</button>
+
+        <input type="text" placeholder="Search..."></input>
       </div>
     )
   }
