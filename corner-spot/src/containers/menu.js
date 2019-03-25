@@ -8,7 +8,6 @@ class Menu extends React.Component{
   }
 
   render(){
-    console.log(this.props.menu);
     return(
       <div id="Menu">
         <h2>Menu here</h2>

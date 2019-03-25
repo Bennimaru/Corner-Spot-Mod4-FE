@@ -8,7 +8,8 @@ class App extends React.Component{
 
   state={
     menu:[],
-    order:[]
+    order:[],
+    userInput:""
   }
 
   componentDidMount(){
@@ -33,12 +34,27 @@ class App extends React.Component{
     })
   }
 
+  handleSearch= event =>{
+    this.setState({
+      userInput:event.target.value
+    })
+  }
+
+  filter= array =>{
+    if (this.state.userInput === "") {
+      return array
+    } else {
+      return [...array].filter(item => item.name.toLowerCase().includes(this.state.userInput.toLowerCase()))
+    }
+  }
+
   render(){
+    console.log(this.state.userInput);
     return(
       <div className="App">
-        <NavBar />
-        <Menu menu={this.state.menu} handleClick={this.handleAdd}/>
-        <Order order={this.state.order} handleClick={this.handleRemove}/>
+        <NavBar handleSearch={this.handleSearch} value={this.state.userInput}/>
+        <Menu menu={this.filter(this.state.menu)} handleClick={this.handleAdd}/>
+        <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
       </div>
     )
   }

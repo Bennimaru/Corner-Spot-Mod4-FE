@@ -10,7 +10,7 @@ class NavBar extends React.Component{
         <button>Appetizers</button>
         <button>Entrees</button>
 
-        <input type="text" placeholder="Search..."></input>
+        <input type="text" placeholder="Search..." value={this.props.value} onChange={this.props.handleSearch} ></input>
       </div>
     )
   }
