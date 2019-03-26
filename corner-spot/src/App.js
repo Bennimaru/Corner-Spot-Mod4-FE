@@ -64,11 +64,17 @@ class App extends React.Component{
     })
   }
 
-  filterMenu = event=>{
+  filterMenu= event=>{
     console.log(event.target.innerText);
     let filterItem = event.target.innerText
     this.setState({
       filteredMenu: [...this.state.menu].filter(item=>item.category===filterItem)
+    })
+  }
+
+  showMenu= event=>{
+    this.setState({
+      filteredMenu:[...this.state.menu]
     })
   }
 
@@ -87,7 +93,7 @@ class App extends React.Component{
       <div className="App">
         <Switch>
           <Route exact path='/menu' render={() =><div>
-            <NavBar handleSearch={this.handleSearch} handleFilterMenu={this.filterMenu} value={this.state.userInput} name={this.state.user}/>
+            <NavBar handleSearch={this.handleSearch} handleFilterMenu={this.filterMenu} showMenu={this.showMenu} value={this.state.userInput} name={this.state.user}/>
             <Menu menu={this.filter(this.state.filteredMenu)} handleClick={this.handleAdd}/>
             <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
             </div> }/>
