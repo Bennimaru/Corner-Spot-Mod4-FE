@@ -10,6 +10,7 @@ class App extends React.Component{
 
   state={
     menu:[],
+    filteredMenu:[],
     order:[],
     userInput:"",
     user:""
@@ -34,8 +35,16 @@ class App extends React.Component{
     })
   }
 
+  componentDidMount(){
+    fetch('http://localhost:3005/api/v1/items')
+    .then(res=>res.json())
+    .then(items=>this.setState({
+      menu:items,
+      filteredMenu:items
+    }))
+  }
+
   handleAdd= item =>{
-    console.log(item.id);
     let newOrder=[item,...this.state.order]
     this.setState({
       order: newOrder
@@ -55,35 +64,35 @@ class App extends React.Component{
     })
   }
 
+  filterMenu = event=>{
+    console.log(event.target.innerText);
+    let filterItem = event.target.innerText
+    this.setState({
+      filteredMenu: [...this.state.menu].filter(item=>item.category===filterItem)
+    })
+  }
+
   filter= array =>{
-    if (this.state.userInput === "") {
+    if(this.state.userInput === ""){
       return array
     } else {
       return [...array].filter(item => item.name.toLowerCase().includes(this.state.userInput.toLowerCase()))
     }
   }
 
-  componentDidMount(){
-    fetch('http://localhost:3005/api/v1/items')
-    .then(res=>res.json())
-    .then(items=>this.setState({
-      menu:items
-    }))
-  }
-
   render(){
-    console.log(this.state.user);
+    console.log(this.state.menu);
+    console.log(this.state.filteredMenu);
     return(
       <div className="App">
         <Switch>
-          <Route exact path='/' render={()=>
-            <Home handleSubmit={this.handleSubmit} value={this.state.user}/>}/>
-          <Route path='/menu' render={() =><div>
-            <NavBar handleSearch={this.handleSearch} value={this.state.userInput} name={this.state.user}/>
-            <Menu menu={this.filter(this.state.menu)} handleClick={this.handleAdd}/>
+          <Route exact path='/menu' render={() =><div>
+            <NavBar handleSearch={this.handleSearch} handleFilterMenu={this.filterMenu} value={this.state.userInput} name={this.state.user}/>
+            <Menu menu={this.filter(this.state.filteredMenu)} handleClick={this.handleAdd}/>
             <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
-            </div>
-           }/>
+            </div> }/>
+          <Route path='/' render={()=>
+           <Home handleSubmit={this.handleSubmit} value={this.state.user}/>}/>
         </Switch>
       </div>
     )

@@ -10,7 +10,7 @@ class Menu extends React.Component{
   render(){
     return(
       <div id="Menu">
-        <h2>Menu here</h2>
+        <h2>Menu</h2>
         {this.props.menu.map(this.renderMenu)}
       </div>
     )

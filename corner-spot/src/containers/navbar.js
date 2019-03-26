@@ -6,10 +6,10 @@ class NavBar extends React.Component{
     return(
       <div id="NavBar">
         <h2>Welcome {this.props.name}</h2>
-
-        <button>Cocktails</button>
-        <button>Appetizers</button>
-        <button>Entrees</button>
+        
+        <button onClick={this.props.handleFilterMenu}>Cocktail</button>
+        <button onClick={this.props.handleFilterMenu}>Appetizer</button>
+        <button onClick={this.props.handleFilterMenu}>Entree</button>
 
         <input type="text" placeholder="Search..." value={this.props.value} onChange={this.props.handleSearch} ></input>
       </div>
