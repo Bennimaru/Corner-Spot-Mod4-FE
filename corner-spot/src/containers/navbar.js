@@ -5,7 +5,8 @@ class NavBar extends React.Component{
   render(){
     return(
       <div id="NavBar">
-        <h2>Welcome</h2>
+        <h2>Welcome {this.props.name}</h2>
+
         <button>Cocktails</button>
         <button>Appetizers</button>
         <button>Entrees</button>

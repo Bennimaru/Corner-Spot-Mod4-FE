@@ -40,6 +40,11 @@
   color: white;
 }
 
+#NavBar button{
+  margin:1vw;
+  padding:1vw;
+}
+
 #Menu {
   float: left;
   margin-top: 10vh;

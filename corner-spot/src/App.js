@@ -3,7 +3,7 @@ import NavBar from './containers/navbar';
 import Menu from './containers/menu';
 import Order from './containers/order';
 import './App.css'
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, withRouter} from 'react-router-dom';
 import Home from './containers/home'
 
 class App extends React.Component{
@@ -27,12 +27,15 @@ class App extends React.Component{
       body:JSON.stringify({name:inputName})
     })
     .then(res => res.json())
-    .then(this.setState({
-      user:inputName
-    }))
+    .then((resp) => {
+      this.setState({
+        user: inputName
+      }, this.props.history.push("/menu"))
+    })
   }
 
   handleAdd= item =>{
+    console.log(item.id);
     let newOrder=[item,...this.state.order]
     this.setState({
       order: newOrder
@@ -60,10 +63,6 @@ class App extends React.Component{
     }
   }
 
-  // <NavBar handleSearch={this.handleSearch} value={this.state.userInput}/>
-  // <Menu menu={this.filter(this.state.menu)} handleClick={this.handleAdd}/>
-  // <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
-
   componentDidMount(){
     fetch('http://localhost:3005/api/v1/items')
     .then(res=>res.json())
@@ -73,22 +72,22 @@ class App extends React.Component{
   }
 
   render(){
-    if(this.state.user){
-      return <Redirect to="/menu" />
-    }
+    console.log(this.state.user);
     return(
       <div className="App">
         <Switch>
-          <Route path='/' render={()=><Home handleSubmit={this.handleSubmit} value={this.state.user}/>}/>
-          <Route path='/menu' render={()=>
-            <div>
-            hi
+          <Route exact path='/' render={()=>
+            <Home handleSubmit={this.handleSubmit} value={this.state.user}/>}/>
+          <Route path='/menu' render={() =><div>
+            <NavBar handleSearch={this.handleSearch} value={this.state.userInput} name={this.state.user}/>
+            <Menu menu={this.filter(this.state.menu)} handleClick={this.handleAdd}/>
+            <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
             </div>
-          }/>
+           }/>
         </Switch>
       </div>
     )
   }
 }
 
-export default App
+export default withRouter(App)
