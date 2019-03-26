@@ -12,6 +12,20 @@
   color: #61dafb;
 }
 
+.splash {
+  background-image: url("https://www.liveblogspot.com/wp-content/uploads/2018/10/waterfront-restaurants-in-the-city-of-Philadelphia.jpg");
+  width:100vw;
+  height:100vh;
+}
+
+.form input{
+  transform: translateY(75vh) translateX(75vw);
+  width:10vw;
+  height: 5vh;
+  display: block;
+  opacity: 0.65;
+}
+
 #NavBar {
   position: fixed;
   top: 0; left: 0;
