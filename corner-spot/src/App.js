@@ -13,7 +13,7 @@ class App extends React.Component{
     filteredMenu:[],
     order:[],
     userInput:"",
-    user:""
+    user:''
   }
 
   handleSubmit= event =>{
@@ -64,20 +64,6 @@ class App extends React.Component{
     })
   }
 
-  filterMenu= event=>{
-    console.log(event.target.innerText);
-    let filterItem = event.target.innerText
-    this.setState({
-      filteredMenu: [...this.state.menu].filter(item=>item.category===filterItem)
-    })
-  }
-
-  showMenu= event=>{
-    this.setState({
-      filteredMenu:[...this.state.menu]
-    })
-  }
-
   filter= array =>{
     if(this.state.userInput === ""){
       return array
@@ -86,18 +72,33 @@ class App extends React.Component{
     }
   }
 
+  showMenu= event=>{
+    this.setState({
+      filteredMenu:[...this.state.menu]
+    })
+  }
+
+  filterMenu= event=>{
+    console.log(event.target.innerText);
+    let filterItem = event.target.innerText
+    this.setState({
+      filteredMenu: [...this.state.menu].filter(item=>item.category===filterItem)
+    })
+  }
+
   render(){
     console.log(this.state.menu);
     console.log(this.state.filteredMenu);
+    console.log(this.state.user);
     return(
       <div className="App">
         <Switch>
-          <Route exact path='/menu' render={() =><div>
+          <Route path='/menu' render={() =><div>
             <NavBar handleSearch={this.handleSearch} handleFilterMenu={this.filterMenu} showMenu={this.showMenu} value={this.state.userInput} name={this.state.user}/>
             <Menu menu={this.filter(this.state.filteredMenu)} handleClick={this.handleAdd}/>
             <Order order={this.filter(this.state.order)} handleClick={this.handleRemove}/>
             </div> }/>
-          <Route path='/' render={()=>
+          <Route exact path='/' render={()=>
            <Home handleSubmit={this.handleSubmit} value={this.state.user}/>}/>
         </Switch>
       </div>
