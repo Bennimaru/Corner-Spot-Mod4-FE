@@ -13,7 +13,7 @@ class App extends React.Component{
     filteredMenu:[],
     order:[],
     userInput:"",
-    user:''
+    user:{}
   }
 
   handleSubmit= event =>{
@@ -28,11 +28,9 @@ class App extends React.Component{
       body:JSON.stringify({name:inputName})
     })
     .then(res => res.json())
-    .then((resp) => {
-      this.setState({
-        user: inputName
-      }, this.props.history.push("/menu"))
-    })
+    .then( user => this.setState({
+      user: user
+    }), this.props.history.push("/menu"))
   }
 
   componentDidMount(){
@@ -46,9 +44,23 @@ class App extends React.Component{
 
   handleAdd= item =>{
     let newOrder=[item,...this.state.order]
-    this.setState({
-      order: newOrder
+    console.log(item.id);
+    fetch('http://localhost:3005/api/v1/orders',{
+      method: "POST",
+      headers:{
+        'Content-Type':"application/json",
+        'Accept': "application/json"
+      },
+      body:JSON.stringify({
+        user_id:this.state.user.id,
+        item_id:item.id
+      })
     })
+    .then(res => res.json())
+    .then(resp => this.setState({
+      order: newOrder
+      })
+    )
   }
 
   handleRemove= item =>{
@@ -87,8 +99,6 @@ class App extends React.Component{
   }
 
   render(){
-    console.log(this.state.menu);
-    console.log(this.state.filteredMenu);
     console.log(this.state.user);
     return(
       <div className="App">
